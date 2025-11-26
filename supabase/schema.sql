@@ -36,8 +36,10 @@ CREATE INDEX IF NOT EXISTS idx_plans_scale ON plans(scale);
 CREATE INDEX IF NOT EXISTS idx_plans_world_view ON plans(world_view);
 CREATE INDEX IF NOT EXISTS idx_plans_location ON plans(location);
 CREATE INDEX IF NOT EXISTS idx_plans_purpose ON plans(purpose);
-CREATE INDEX IF NOT EXISTS idx_plans_title ON plans USING gin(to_tsvector('japanese', title));
-CREATE INDEX IF NOT EXISTS idx_plans_description ON plans USING gin(to_tsvector('japanese', description));
+-- 日本語全文検索インデックス（Supabaseでは日本語設定が利用できないためコメントアウト）
+-- 検索はILIKEを使用して部分一致検索を実装
+-- CREATE INDEX IF NOT EXISTS idx_plans_title ON plans USING gin(to_tsvector('japanese', title));
+-- CREATE INDEX IF NOT EXISTS idx_plans_description ON plans USING gin(to_tsvector('japanese', description));
 
 -- updated_at自動更新トリガー
 CREATE OR REPLACE FUNCTION update_updated_at_column()
