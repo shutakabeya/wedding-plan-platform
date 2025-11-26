@@ -20,7 +20,7 @@ export default function Home() {
           </div>
 
           {/* スマホ版: タイトル、検索バー、検索ボタンを中央配置 */}
-          <div className="md:hidden flex flex-col items-center pt-24 pb-4">
+          <div className="md:hidden flex flex-col items-center pt-28 pb-4">
             {/* タイトル */}
             <div className="text-center mb-6">
               <h1 className="text-xl font-bold text-gray-900 leading-tight">
