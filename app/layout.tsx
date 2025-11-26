@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "結婚式プラン送客プラットフォーム",
-  description: "理想の結婚式・前撮りプランを見つけよう",
+  title: "Bridal",
+  description: "理想の結婚式や前撮りがすぐ見つかる Bridal。世界観・価格・規模・場所で検索でき、自然文のキーワード検索にも対応。迷ったら LINE で相談も可能。",
 };
 
 export default function RootLayout({
