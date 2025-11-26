@@ -52,7 +52,9 @@ export default function Header() {
             </button>
 
             {/* 中央: タイトル */}
-            <h1 className="text-2xl font-bold text-gray-900">Bridal</h1>
+            <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-pink-600 transition-colors">
+              Bridal
+            </Link>
 
             {/* 右: 新規登録・ログインボタン or ユーザー情報 */}
             <div className="flex items-center gap-3">
@@ -117,7 +119,9 @@ export default function Header() {
             </button>
 
             {/* 中央: タイトル */}
-            <h1 className="text-lg font-bold text-gray-800">Bridal</h1>
+            <Link href="/" className="text-lg font-bold text-gray-800 hover:text-pink-700 transition-colors">
+              Bridal
+            </Link>
 
             {/* 右: プロフィールマーク or ログアウト */}
             {isLoggedIn ? (

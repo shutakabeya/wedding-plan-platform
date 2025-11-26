@@ -19,20 +19,20 @@ export default function Home() {
             </p>
           </div>
 
-          {/* スマホ版: タイトルのみ（小さめ、検索バーに近づける） */}
-          <div className="md:hidden text-center mb-8">
-            <h1 className="text-xl font-bold text-gray-900 leading-tight">
-              理想の結婚式プランを探そう
-            </h1>
-          </div>
+          {/* スマホ版: タイトル、検索バー、検索ボタンを中央配置 */}
+          <div className="md:hidden flex flex-col items-center pt-16 pb-8">
+            {/* タイトル */}
+            <div className="text-center mb-8">
+              <h1 className="text-xl font-bold text-gray-900 leading-tight">
+                理想の結婚式プランを探そう
+              </h1>
+            </div>
 
-          {/* 自然文検索バー */}
-          <div className="mb-6 md:mb-12 md:max-w-full max-w-sm mx-auto">
-            <form action="/search" method="get" className="w-full">
-              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-                {/* スマホ版: 虫眼鏡マーク付き検索バー */}
-                <div className="relative flex-1">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 md:hidden">
+            {/* 自然文検索バーとボタン */}
+            <div className="w-full max-w-sm">
+              <form action="/search" method="get" className="w-full flex flex-col gap-4">
+                <div className="relative">
+                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
                     <svg
                       className="w-5 h-5"
                       fill="none"
@@ -49,12 +49,34 @@ export default function Home() {
                     type="text"
                     name="query"
                     placeholder="「桜っぽい雰囲気」「10人くらいで」「15万円以内」など自由入力"
-                    className="w-full pl-11 md:pl-6 pr-4 py-3 text-base md:px-6 md:py-4 md:text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:border-pink-500 shadow-lg placeholder:text-gray-300 md:placeholder:text-gray-500"
+                    className="w-full pl-11 pr-4 py-3 text-base border-2 border-gray-300 rounded-full focus:outline-none focus:border-pink-500 shadow-lg placeholder:text-gray-300"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="px-6 py-3 text-base md:px-8 md:py-4 bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transition-colors shadow-lg w-full sm:w-auto"
+                  className="w-full px-6 py-3 text-base bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transition-colors shadow-lg"
+                >
+                  検索
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* PC版: 自然文検索バー */}
+          <div className="hidden md:block mb-6 md:mb-12 md:max-w-full max-w-sm mx-auto">
+            <form action="/search" method="get" className="w-full">
+              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    name="query"
+                    placeholder="「桜っぽい雰囲気」「10人くらいで」「15万円以内」など自由入力"
+                    className="w-full pl-6 pr-4 py-4 text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:border-pink-500 shadow-lg placeholder:text-gray-500"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="px-8 py-4 bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transition-colors shadow-lg w-full sm:w-auto"
                 >
                   検索
                 </button>
