@@ -7,7 +7,7 @@ export default function Home() {
     <div className="min-h-screen bg-linear-to-b from-pink-50 to-white">
       <Header />
       
-      <main className="container mx-auto px-4 pt-12 pb-6 md:py-16">
+      <main className="container mx-auto px-4 pt-20 pb-6 md:pt-24 md:pb-16">
         <div className="max-w-4xl mx-auto">
           {/* PC版: タイトルとサブタイトル */}
           <div className="hidden md:block text-center mb-12">
