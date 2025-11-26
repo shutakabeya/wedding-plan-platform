@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-
 export default function LineConsultationButton() {
   return (
-    <Link
-      href="/line"
+    <a
+      href="https://lin.ee/rmqEaLy"
+      target="_blank"
+      rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[#06C755] px-6 py-3 text-white shadow-lg transition-all hover:bg-[#05B548] hover:shadow-xl"
     >
       <svg
@@ -21,7 +21,7 @@ export default function LineConsultationButton() {
         />
       </svg>
       <span className="font-semibold">LINE相談</span>
-    </Link>
+    </a>
   )
 }
 

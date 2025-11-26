@@ -1,7 +1,13 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { SCALE_OPTIONS, WORLD_VIEW_OPTIONS, PURPOSE_OPTIONS, PREFECTURES } from '@/types/database'
+import {
+  SCALE_OPTIONS,
+  WORLD_VIEW_OPTIONS,
+  PURPOSE_OPTIONS,
+  REGION_PREFECTURES,
+  PRICE_RANGE_OPTIONS,
+} from '@/types/database'
 
 interface SearchFiltersProps {
   initialParams: Record<string, string | undefined>
@@ -25,18 +31,20 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-4">検索条件</h2>
 
-      {/* 価格範囲 */}
+      {/* 料金（Price Range） */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">価格範囲</label>
+        <label className="block text-sm font-semibold mb-2">料金（Price Range）</label>
         <select
           className="w-full px-3 py-2 border rounded"
           value={initialParams.price || ''}
           onChange={(e) => updateFilter('price', e.target.value)}
         >
           <option value="">すべて</option>
-          <option value="low">10万円以下</option>
-          <option value="mid">10万円〜30万円</option>
-          <option value="high">30万円以上</option>
+          {PRICE_RANGE_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -83,10 +91,14 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
           onChange={(e) => updateFilter('location', e.target.value)}
         >
           <option value="">すべて</option>
-          {PREFECTURES.map((pref) => (
-            <option key={pref} value={pref}>
-              {pref}
-            </option>
+          {Object.entries(REGION_PREFECTURES).map(([region, prefs]) => (
+            <optgroup key={region} label={region}>
+              {prefs.map((pref) => (
+                <option key={pref} value={pref}>
+                  {pref}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
       </div>

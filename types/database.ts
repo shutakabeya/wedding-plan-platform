@@ -16,7 +16,7 @@ export interface Plan {
   title: string
   price: number
   scale: string
-  world_view: string
+  world_view: string[]
   location: string
   purpose: string
   date_range: string | null
@@ -31,11 +31,26 @@ export interface PlanWithProvider extends Plan {
   provider: Provider
 }
 
+export interface User {
+  id: string
+  email: string
+  password_hash: string
+  name: string
+  created_at: string
+}
+
+export interface Favorite {
+  id: string
+  user_id: string
+  plan_id: string
+  created_at: string
+}
+
 // 検索パラメータ
 export interface SearchParams {
   query?: string
-  price?: string // "low" | "mid" | "high"
-  scale?: string // "small" | "medium" | "large" | "xl"
+  price?: string // "1"〜"9"（料金レンジID）
+  scale?: string // 規模（ふたりのみ / 少人数 など）
   worldview?: string // 世界観タグ（桜/ナチュラル etc）
   location?: string
   purpose?: string
@@ -48,7 +63,7 @@ export interface PlanFormData {
   title: string
   price: number
   scale: string
-  world_view: string
+  world_view: string[]
   location: string
   purpose: string
   date_range: string
@@ -59,35 +74,54 @@ export interface PlanFormData {
 
 // 選択肢の定義
 export const SCALE_OPTIONS = [
-  { value: 'small', label: '0〜10人' },
-  { value: 'medium', label: '10〜30人' },
-  { value: 'large', label: '30〜60人' },
-  { value: 'xl', label: '60人以上' },
+  { value: 'ふたりのみ', label: 'ふたりのみ' },
+  { value: '〜10名（家族婚）', label: '〜10名（家族婚）' },
+  { value: '10〜30名（少人数）', label: '10〜30名（少人数）' },
+  { value: '30〜60名（中規模）', label: '30〜60名（中規模）' },
+  { value: '60〜100名（大規模）', label: '60〜100名（大規模）' },
+  { value: '100名以上（大型）', label: '100名以上（大型）' },
 ] as const
 
 export const WORLD_VIEW_OPTIONS = [
-  '桜',
-  'ナチュラル',
+  'フラワー',
+  'バルーン',
+  'キャンドル',
+  'フェアリーライト',
+  'アンティーク',
+  'ウッド',
+  'シンプル',
+  'ロマンチック',
+  'モダン',
+  'クラシック',
+  '和モダン',
   '韓国風',
   '海',
   '森',
-  '夜景',
+  '街中',
   'スタジオ',
-  'シック',
-  '和風',
-  'モダン',
-  'ヴィンテージ',
-  'その他',
+  'レンガ',
+  '花畑',
+  '夜景',
+  '夕日',
+  '高級ホテル',
+  'チャペル',
+  '神前式',
+  'ガーデン',
+  '洋館',
+  '古民家',
+  'レストラン',
+  '邸宅',
+  'リゾート',
+  'フォトスタジオ',
 ] as const
 
 export const PURPOSE_OPTIONS = [
   '前撮り',
-  'フォト婚',
-  '小規模結婚式',
-  '会食',
-  '映像',
-  'ヘアメ',
-  'その他',
+  '後撮り',
+  'フォトウェディング',
+  '結婚式（挙式）',
+  '披露宴',
+  '家族婚',
 ] as const
 
 export const PREFECTURES = [
@@ -98,5 +132,31 @@ export const PREFECTURES = [
   '奈良', '和歌山', '鳥取', '島根', '岡山', '広島', '山口',
   '徳島', '香川', '愛媛', '高知', '福岡', '佐賀', '長崎',
   '熊本', '大分', '宮崎', '鹿児島', '沖縄',
+] as const
+
+// 地方ごとの都道府県（選択UI用）
+export const REGION_PREFECTURES = {
+  北海道: ['北海道'],
+  東北: ['青森', '岩手', '宮城', '秋田', '山形', '福島'],
+  関東: ['東京', '神奈川', '千葉', '埼玉', '茨城', '栃木', '群馬'],
+  中部: ['愛知', '静岡', '岐阜', '三重', '新潟', '長野', '山梨', '富山', '石川', '福井'],
+  関西: ['大阪', '京都', '兵庫', '奈良', '滋賀', '和歌山'],
+  中国: ['広島', '岡山', '山口', '鳥取', '島根'],
+  四国: ['香川', '愛媛', '徳島', '高知'],
+  九州: ['福岡', '佐賀', '長崎', '熊本', '大分', '宮崎', '鹿児島'],
+  沖縄: ['沖縄'],
+} as const
+
+// 料金レンジ（検索用9段階）
+export const PRICE_RANGE_OPTIONS = [
+  { value: '1', label: '〜10万円' },
+  { value: '2', label: '10〜20万円' },
+  { value: '3', label: '20〜40万円' },
+  { value: '4', label: '40〜60万円' },
+  { value: '5', label: '60〜100万円' },
+  { value: '6', label: '100〜150万円' },
+  { value: '7', label: '150〜250万円' },
+  { value: '8', label: '250〜400万円' },
+  { value: '9', label: '400〜600万円以上' },
 ] as const
 

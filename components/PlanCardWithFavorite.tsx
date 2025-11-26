@@ -1,23 +1,35 @@
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Plan } from '@/types/database'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
+import FavoriteButton from './FavoriteButton'
 
-interface PlanCardProps {
+interface PlanCardWithFavoriteProps {
   plan: Plan
 }
 
-export default async function PlanCard({ plan }: PlanCardProps) {
-  const supabase = await createClient()
-  
-  // 最初の画像を取得
-  const imageUrl = plan.images && plan.images.length > 0
-    ? supabase.storage.from('plan-images').getPublicUrl(plan.images[0]).data.publicUrl
-    : '/placeholder-wedding.jpg'
+export default function PlanCardWithFavorite({ plan }: PlanCardWithFavoriteProps) {
+  const [imageUrl, setImageUrl] = useState<string>('/placeholder-wedding.jpg')
+
+  useEffect(() => {
+    const supabase = createClient()
+    if (plan.images && plan.images.length > 0) {
+      const url = supabase.storage.from('plan-images').getPublicUrl(plan.images[0]).data.publicUrl
+      setImageUrl(url)
+    }
+  }, [plan.images])
 
   return (
-    <Link href={`/plan/${plan.id}`}>
-      <div className="bg-white rounded-lg shadow-sm md:shadow-md md:hover:shadow-xl hover:shadow transition-shadow overflow-hidden">
+    <div className="relative bg-white rounded-lg shadow-sm md:shadow-md md:hover:shadow-xl hover:shadow transition-shadow overflow-hidden">
+      {/* お気に入りボタン（右上） */}
+      <div className="absolute top-2 right-2 z-10">
+        <FavoriteButton planId={plan.id} />
+      </div>
+
+      <Link href={`/plan/${plan.id}`}>
         {/* 画像 */}
         <div className="relative w-full h-32 md:h-48 bg-gray-200">
           {plan.images && plan.images.length > 0 ? (
@@ -70,8 +82,8 @@ export default async function PlanCard({ plan }: PlanCardProps) {
             {plan.description || '詳細はプランページをご覧ください'}
           </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   )
 }
 

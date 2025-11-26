@@ -1,14 +1,17 @@
 import Link from 'next/link'
 import LineConsultationButton from '@/components/LineConsultationButton'
+import Header from '@/components/Header'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
-      <main className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-linear-to-b from-pink-50 to-white">
+      <Header />
+      
+      <main className="container mx-auto px-4 pt-12 pb-6 md:py-16">
         <div className="max-w-4xl mx-auto">
-          {/* ヘッダー */}
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+          {/* PC版: タイトルとサブタイトル */}
+          <div className="hidden md:block text-center mb-12">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
               理想の結婚式プランを探そう
             </h1>
             <p className="text-xl text-gray-600">
@@ -16,19 +19,42 @@ export default function Home() {
             </p>
           </div>
 
+          {/* スマホ版: タイトルのみ（小さめ、検索バーに近づける） */}
+          <div className="md:hidden text-center mb-8">
+            <h1 className="text-xl font-bold text-gray-900 leading-tight">
+              理想の結婚式プランを探そう
+            </h1>
+          </div>
+
           {/* 自然文検索バー */}
-          <div className="mb-12">
+          <div className="mb-6 md:mb-12 md:max-w-full max-w-sm mx-auto">
             <form action="/search" method="get" className="w-full">
-              <div className="flex gap-4">
-                <input
-                  type="text"
-                  name="query"
-                  placeholder="「桜っぽい雰囲気」「10人くらいで」「15万円以内」など自由入力"
-                  className="flex-1 px-6 py-4 text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:border-pink-500 shadow-lg"
-                />
+              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+                {/* スマホ版: 虫眼鏡マーク付き検索バー */}
+                <div className="relative flex-1">
+                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 md:hidden">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    name="query"
+                    placeholder="「桜っぽい雰囲気」「10人くらいで」「15万円以内」など自由入力"
+                    className="w-full pl-11 md:pl-6 pr-4 py-3 text-base md:px-6 md:py-4 md:text-lg border-2 border-gray-300 rounded-full focus:outline-none focus:border-pink-500 shadow-lg placeholder:text-gray-300 md:placeholder:text-gray-500"
+                  />
+                </div>
                 <button
                   type="submit"
-                  className="px-8 py-4 bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transition-colors shadow-lg"
+                  className="px-6 py-3 text-base md:px-8 md:py-4 bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transition-colors shadow-lg w-full sm:w-auto"
                 >
                   検索
                 </button>
@@ -37,36 +63,36 @@ export default function Home() {
           </div>
 
           {/* 3つの検索入口ボタン */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-12">
             <Link
-              href="/search?price=low"
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center"
+              href="/search?price=3"
+              className="bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm md:shadow-lg md:hover:shadow-xl transition-shadow text-center opacity-90 md:opacity-100"
             >
-              <div className="text-4xl mb-4">💰</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">値段で探す</h2>
-              <p className="text-gray-600">
+              <div className="text-3xl md:text-4xl mb-2 md:mb-4">💰</div>
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-1 md:mb-2">値段で探す</h2>
+              <p className="text-sm md:text-base text-gray-600">
                 予算に合わせてプランを検索
               </p>
             </Link>
 
             <Link
-              href="/search?scale=small"
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center"
+              href="/search?scale=10〜30名（少人数）"
+              className="bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm md:shadow-lg md:hover:shadow-xl transition-shadow text-center opacity-90 md:opacity-100"
             >
-              <div className="text-4xl mb-4">👥</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">規模で探す</h2>
-              <p className="text-gray-600">
+              <div className="text-3xl md:text-4xl mb-2 md:mb-4">👥</div>
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-1 md:mb-2">規模で探す</h2>
+              <p className="text-sm md:text-base text-gray-600">
                 参加人数に合わせてプランを検索
               </p>
             </Link>
 
             <Link
               href="/worldview"
-              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow text-center"
+              className="bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm md:shadow-lg md:hover:shadow-xl transition-shadow text-center opacity-90 md:opacity-100"
             >
-              <div className="text-4xl mb-4">🌸</div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">世界観で探す</h2>
-              <p className="text-gray-600">
+              <div className="text-3xl md:text-4xl mb-2 md:mb-4">🌸</div>
+              <h2 className="text-lg md:text-2xl font-bold text-gray-900 mb-1 md:mb-2">世界観で探す</h2>
+              <p className="text-sm md:text-base text-gray-600">
                 理想の雰囲気でプランを検索
               </p>
             </Link>

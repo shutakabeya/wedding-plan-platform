@@ -19,7 +19,7 @@ export default function NewPlanPage() {
     title: '',
     price: '',
     scale: '',
-    world_view: '',
+    world_view: [] as string[],
     location: '',
     purpose: '',
     date_range: '',
@@ -59,6 +59,13 @@ export default function NewPlanPage() {
     if (e.target.files) {
       setImages(Array.from(e.target.files))
     }
+  }
+
+  const toggleWorldView = (value: string) => {
+    const current = formData.world_view
+    const exists = current.includes(value)
+    const next = exists ? current.filter((v) => v !== value) : [...current, value]
+    setFormData({ ...formData, world_view: next })
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -192,19 +199,35 @@ export default function NewPlanPage() {
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 世界観 <span className="text-red-500">*</span>
               </label>
-              <select
-                value={formData.world_view}
-                onChange={(e) => setFormData({ ...formData, world_view: e.target.value })}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+        <p className="text-xs text-gray-500 mb-2">
+          複数選択可（当てはまる世界観をすべて選んでください）
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {WORLD_VIEW_OPTIONS.map((option) => {
+            const checked = formData.world_view.includes(option)
+            return (
+              <label
+                key={option}
+                className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer transition-colors ${
+                  checked
+                    ? 'border-pink-500 bg-pink-50 text-pink-700'
+                    : 'border-gray-300 bg-white hover:border-pink-300'
+                }`}
               >
-                <option value="">選択してください</option>
-                {WORLD_VIEW_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+                <input
+                  type="checkbox"
+                  className="h-4 w-4"
+                  checked={checked}
+                  onChange={() => toggleWorldView(option)}
+                />
+                <span>{option}</span>
+              </label>
+            )
+          })}
+        </div>
+        {formData.world_view.length === 0 && (
+          <p className="mt-1 text-xs text-red-500">少なくとも1つは選択してください。</p>
+        )}
             </div>
 
             {/* 場所 */}

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import LineConsultationButton from '@/components/LineConsultationButton'
+import FavoriteButton from '@/components/FavoriteButton'
 
 interface PlanDetailPageProps {
   params: Promise<{ id: string }>
@@ -63,7 +64,10 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
 
           {/* プラン情報 */}
           <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">{plan.title}</h1>
+            <div className="flex items-start justify-between mb-4">
+              <h1 className="text-4xl font-bold text-gray-900">{plan.title}</h1>
+              <FavoriteButton planId={plan.id} className="ml-4" />
+            </div>
 
             {/* 価格 */}
             <div className="mb-6">
@@ -75,9 +79,20 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
 
             {/* タグ */}
             <div className="flex flex-wrap gap-2 mb-6">
-              <span className="px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-semibold">
-                {plan.world_view}
-              </span>
+              {Array.isArray(plan.world_view) && plan.world_view.length > 0 ? (
+                plan.world_view.map((wv) => (
+                  <span
+                    key={wv}
+                    className="px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-semibold"
+                  >
+                    {wv}
+                  </span>
+                ))
+              ) : (
+                <span className="px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-semibold">
+                  {plan.world_view}
+                </span>
+              )}
               <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-semibold">
                 規模: {plan.scale}
               </span>
@@ -153,8 +168,10 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
 
           {/* LINE相談ボタン */}
           <div className="text-center">
-            <Link
-              href="/line"
+            <a
+              href="https://lin.ee/rmqEaLy"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#06C755] text-white rounded-full font-semibold hover:bg-[#05B548] transition-colors shadow-lg"
             >
               <svg
@@ -170,7 +187,7 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
                 />
               </svg>
               LINEで相談する
-            </Link>
+            </a>
           </div>
         </div>
       </div>

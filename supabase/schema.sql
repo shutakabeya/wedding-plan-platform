@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS plans (
   title TEXT NOT NULL,
   price INTEGER NOT NULL,
   scale TEXT NOT NULL, -- "0", "2-10", "10-30", "30-60", "60+"
-  world_view TEXT NOT NULL, -- "桜", "ナチュラル", "韓国風", etc.
+  world_view TEXT[] NOT NULL DEFAULT '{}', -- 世界観タグ（複数選択可）
   location TEXT NOT NULL, -- 都道府県 or 屋外/スタジオカテゴリ
   purpose TEXT NOT NULL, -- "前撮り", "フォト婚", "小規模結婚式", etc.
   date_range TEXT, -- 希望日または可能期間
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS plans (
 CREATE INDEX IF NOT EXISTS idx_plans_provider_id ON plans(provider_id);
 CREATE INDEX IF NOT EXISTS idx_plans_price ON plans(price);
 CREATE INDEX IF NOT EXISTS idx_plans_scale ON plans(scale);
-CREATE INDEX IF NOT EXISTS idx_plans_world_view ON plans(world_view);
+CREATE INDEX IF NOT EXISTS idx_plans_world_view ON plans USING gin(world_view);
 CREATE INDEX IF NOT EXISTS idx_plans_location ON plans(location);
 CREATE INDEX IF NOT EXISTS idx_plans_purpose ON plans(purpose);
 -- 日本語全文検索インデックス（Supabaseでは日本語設定が利用できないためコメントアウト）
@@ -91,6 +91,68 @@ CREATE POLICY "Anyone can insert providers"
 -- 全員がprovidersテーブルを更新可能（簡易実装）
 CREATE POLICY "Anyone can update providers"
   ON providers FOR UPDATE
+  USING (true);
+
+-- 一般ユーザーテーブル
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  name TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- インデックス作成
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+
+-- Row Level Security (RLS) ポリシー
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+
+-- 一般ユーザー情報のRLSポリシー（簡易実装）
+-- 全員がusersテーブルを読み取り可能
+CREATE POLICY "Users are viewable by everyone"
+  ON users FOR SELECT
+  USING (true);
+
+-- 全員がusersテーブルに挿入可能（新規登録用）
+CREATE POLICY "Anyone can insert users"
+  ON users FOR INSERT
+  WITH CHECK (true);
+
+-- 全員がusersテーブルを更新可能（簡易実装）
+CREATE POLICY "Anyone can update users"
+  ON users FOR UPDATE
+  USING (true);
+
+-- お気に入りテーブル
+CREATE TABLE IF NOT EXISTS favorites (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  plan_id UUID NOT NULL REFERENCES plans(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id, plan_id)
+);
+
+-- インデックス作成
+CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id);
+CREATE INDEX IF NOT EXISTS idx_favorites_plan_id ON favorites(plan_id);
+
+-- Row Level Security (RLS) ポリシー
+ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
+
+-- お気に入りは全員が閲覧可能（簡易実装）
+CREATE POLICY "Favorites are viewable by everyone"
+  ON favorites FOR SELECT
+  USING (true);
+
+-- 全員がお気に入りを追加可能
+CREATE POLICY "Anyone can insert favorites"
+  ON favorites FOR INSERT
+  WITH CHECK (true);
+
+-- 全員がお気に入りを削除可能
+CREATE POLICY "Anyone can delete favorites"
+  ON favorites FOR DELETE
   USING (true);
 
 -- 注意: 本番環境では適切な認証・認可を実装してください
