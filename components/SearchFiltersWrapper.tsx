@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import SearchFilters from './SearchFilters'
 import {
@@ -87,6 +88,25 @@ export default function SearchFiltersWrapper({ initialParams, children }: Search
 
   return (
     <>
+      {/* トップページへ戻るボタン */}
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+      >
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span>トップページに戻る</span>
+      </Link>
+
       {/* タイトルとトグルボタン */}
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">検索結果</h1>
