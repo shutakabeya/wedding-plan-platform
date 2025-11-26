@@ -20,9 +20,9 @@ export default function Home() {
           </div>
 
           {/* スマホ版: タイトル、検索バー、検索ボタンを中央配置 */}
-          <div className="md:hidden flex flex-col items-center pt-16 pb-8">
+          <div className="md:hidden flex flex-col items-center pt-24 pb-4">
             {/* タイトル */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
               <h1 className="text-xl font-bold text-gray-900 leading-tight">
                 理想の結婚式プランを探そう
               </h1>
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
 
           {/* 3つの検索入口ボタン */}
-          <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-12">
+          <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-12 mt-4 md:mt-0">
             <Link
               href="/search?price=3"
               className="bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-sm md:shadow-lg md:hover:shadow-xl transition-shadow text-center opacity-90 md:opacity-100"
