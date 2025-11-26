@@ -117,7 +117,7 @@ export default async function SearchResults({ searchParams }: SearchResultsProps
       // title, description, summary_pointsのいずれかにマッチするものを検索
       const matchesTitle = plan.title?.toLowerCase().includes(searchQuery) || false
       const matchesDescription = plan.description?.toLowerCase().includes(searchQuery) || false
-      const matchesSummaryPoints = plan.summary_points?.some((point) =>
+      const matchesSummaryPoints = plan.summary_points?.some((point: string) =>
         point.toLowerCase().includes(searchQuery)
       ) || false
       
