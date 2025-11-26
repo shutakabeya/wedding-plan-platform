@@ -48,7 +48,7 @@ export default function FavoritesPage() {
       }
 
       // プランIDのリストを取得
-      const planIds = favoritesData.map((f) => f.plan_id)
+      const planIds = favoritesData.map((f: { plan_id: string }) => f.plan_id)
 
       // プラン情報を取得
       const { data: plansData, error: plansError } = await supabase
@@ -64,7 +64,7 @@ export default function FavoritesPage() {
 
       // お気に入り登録順に並び替え
       const sortedPlans = planIds
-        .map((id) => plansData?.find((p) => p.id === id))
+        .map((id: string) => plansData?.find((p: Plan) => p.id === id))
         .filter((p): p is Plan => p !== undefined)
 
       setFavorites(sortedPlans)

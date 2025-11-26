@@ -80,7 +80,7 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
             {/* タグ */}
             <div className="flex flex-wrap gap-2 mb-6">
               {Array.isArray(plan.world_view) && plan.world_view.length > 0 ? (
-                plan.world_view.map((wv) => (
+                plan.world_view.map((wv: string) => (
                   <span
                     key={wv}
                     className="px-4 py-2 bg-pink-100 text-pink-700 rounded-full font-semibold"
