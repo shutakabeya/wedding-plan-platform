@@ -25,18 +25,36 @@ export default function WorldviewPage() {
                 className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:scale-105 text-center"
               >
                 <div className="text-5xl mb-4">
-                  {worldview === '桜' && '🌸'}
-                  {worldview === 'ナチュラル' && '🌿'}
-                  {worldview === '韓国風' && '💕'}
+                  {worldview === 'フラワー' && '🌸'}
+                  {worldview === 'バルーン' && '🎈'}
+                  {worldview === 'キャンドル' && '🕯️'}
+                  {worldview === 'フェアリーライト' && '✨'}
+                  {worldview === 'アンティーク' && '🏺'}
+                  {worldview === 'ウッド' && '🪵'}
+                  {worldview === 'シンプル' && '⚪'}
+                  {worldview === 'ロマンチック' && '💕'}
+                  {worldview === 'モダン' && '🔷'}
+                  {worldview === 'クラシック' && '🎩'}
+                  {worldview === '和モダン' && '🏮'}
+                  {worldview === '韓国風' && '💝'}
                   {worldview === '海' && '🌊'}
                   {worldview === '森' && '🌲'}
-                  {worldview === '夜景' && '🌃'}
+                  {worldview === '街中' && '🏙️'}
                   {worldview === 'スタジオ' && '📸'}
-                  {worldview === 'シック' && '🖤'}
-                  {worldview === '和風' && '🏮'}
-                  {worldview === 'モダン' && '✨'}
-                  {worldview === 'ヴィンテージ' && '📻'}
-                  {!['桜', 'ナチュラル', '韓国風', '海', '森', '夜景', 'スタジオ', 'シック', '和風', 'モダン', 'ヴィンテージ'].includes(worldview) && '🎨'}
+                  {worldview === 'レンガ' && '🧱'}
+                  {worldview === '花畑' && '🌺'}
+                  {worldview === '夜景' && '🌃'}
+                  {worldview === '夕日' && '🌅'}
+                  {worldview === '高級ホテル' && '🏨'}
+                  {worldview === 'チャペル' && '⛪'}
+                  {worldview === '神前式' && '⛩️'}
+                  {worldview === 'ガーデン' && '🌳'}
+                  {worldview === '洋館' && '🏛️'}
+                  {worldview === '古民家' && '🏘️'}
+                  {worldview === 'レストラン' && '🍽️'}
+                  {worldview === '邸宅' && '🏰'}
+                  {worldview === 'リゾート' && '🏖️'}
+                  {worldview === 'フォトスタジオ' && '📷'}
                 </div>
                 <h2 className="text-xl font-bold text-gray-900">
                   {worldview}
