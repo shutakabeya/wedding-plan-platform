@@ -12,20 +12,20 @@ export default function CouplesLandingPage() {
         <section className="container mx-auto px-4 py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              あなたの理想の「世界観」から選べる。
+              結婚式は、プランごとに選ぶ時代。
             </h1>
             <p className="text-2xl md:text-3xl font-semibold text-pink-600 mb-8">
-              結婚式・前撮りプラン検索の新基準。
+              結婚式・前撮り検索の新基準。
             </p>
             <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
               フラワー・バルーン・海・和モダン…世界観や価格・規模・場所から簡単に検索。ストレスのない準備をサポートします。
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/search"
+                href="/"
                 className="px-8 py-4 bg-pink-500 text-white text-lg font-semibold rounded-full hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
               >
-                今すぐプランを探す（無料）
+                サイトを見る
               </Link>
               <Link
                 href="/line"
@@ -42,7 +42,7 @@ export default function CouplesLandingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12 md:mb-16">
-                結婚式準備で直面する課題
+                結婚式準備に潜む課題
               </h2>
               
               <div className="grid md:grid-cols-2 gap-6 md:gap-8">
