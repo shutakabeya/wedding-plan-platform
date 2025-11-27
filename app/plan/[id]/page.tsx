@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import LineConsultationButton from '@/components/LineConsultationButton'
 import FavoriteButton from '@/components/FavoriteButton'
+import Header from '@/components/Header'
+import ImageSlider from '@/components/ImageSlider'
 
 interface PlanDetailPageProps {
   params: Promise<{ id: string }>
@@ -54,6 +56,7 @@ export default async function PlanDetailPage({ params, searchParams }: PlanDetai
 
   return (
     <div className="min-h-screen bg-gray-50 pt-14 md:pt-20">
+      <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* 戻るボタン */}
@@ -66,21 +69,7 @@ export default async function PlanDetailPage({ params, searchParams }: PlanDetai
 
           {/* 画像スライダー */}
           <div className="mb-8">
-            {imageUrls.length > 0 ? (
-              <div className="relative w-full h-96 bg-gray-200 rounded-lg overflow-hidden">
-                <Image
-                  src={imageUrls[0]}
-                  alt={plan.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            ) : (
-              <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
-                画像なし
-              </div>
-            )}
+            <ImageSlider images={imageUrls} alt={plan.title} />
           </div>
 
           {/* プラン情報 */}
