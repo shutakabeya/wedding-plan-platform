@@ -169,7 +169,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href={`/plan/${plan.id}`}
+                    href={`/plan/${plan.id}?from=provider`}
                     className="flex-1 text-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
                   >
                     閲覧

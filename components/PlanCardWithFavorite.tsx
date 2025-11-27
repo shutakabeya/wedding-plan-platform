@@ -9,9 +9,10 @@ import FavoriteButton from './FavoriteButton'
 
 interface PlanCardWithFavoriteProps {
   plan: Plan
+  from?: string
 }
 
-export default function PlanCardWithFavorite({ plan }: PlanCardWithFavoriteProps) {
+export default function PlanCardWithFavorite({ plan, from }: PlanCardWithFavoriteProps) {
   const [imageUrl, setImageUrl] = useState<string>('/placeholder-wedding.jpg')
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function PlanCardWithFavorite({ plan }: PlanCardWithFavoriteProps
         <FavoriteButton planId={plan.id} />
       </div>
 
-      <Link href={`/plan/${plan.id}`}>
+      <Link href={`/plan/${plan.id}${from ? `?from=${from}` : ''}`}>
         {/* 画像 */}
         <div className="relative w-full h-32 md:h-48 bg-gray-200">
           {plan.images && plan.images.length > 0 ? (

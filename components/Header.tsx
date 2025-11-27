@@ -35,7 +35,7 @@ export default function Header({ isProviderPage = false }: HeaderProps) {
       {/* PC版: 透明でぼかし効果のあるヘッダー */}
       <header className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-md border-b border-white/20">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+          <div className="relative flex items-center justify-between">
             {/* 左: サイドバーボタン */}
             <button
               onClick={() => setSidebarOpen(true)}
@@ -55,8 +55,11 @@ export default function Header({ isProviderPage = false }: HeaderProps) {
               </svg>
             </button>
 
-            {/* 中央: タイトル */}
-            <Link href="/" className="text-2xl font-bold text-gray-900 hover:text-pink-600 transition-colors">
+            {/* 中央: タイトル（絶対配置で中央固定） */}
+            <Link 
+              href="/" 
+              className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold text-gray-900 hover:text-pink-600 transition-colors"
+            >
               Bridal
             </Link>
 
@@ -172,9 +175,9 @@ export default function Header({ isProviderPage = false }: HeaderProps) {
       {/* サイドバー */}
       {sidebarOpen && (
         <>
-          {/* オーバーレイ */}
+          {/* オーバーレイ（透明、クリックで閉じる機能のみ） */}
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            className="fixed inset-0 z-40"
             onClick={() => setSidebarOpen(false)}
           ></div>
 

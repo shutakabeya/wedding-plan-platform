@@ -7,10 +7,12 @@ import FavoriteButton from '@/components/FavoriteButton'
 
 interface PlanDetailPageProps {
   params: Promise<{ id: string }>
+  searchParams: Promise<{ from?: string }>
 }
 
-export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
+export default async function PlanDetailPage({ params, searchParams }: PlanDetailPageProps) {
   const { id } = await params
+  const { from } = await searchParams
   const supabase = await createClient()
 
   // プラン情報を取得
@@ -31,16 +33,30 @@ export default async function PlanDetailPage({ params }: PlanDetailPageProps) {
       )
     : []
 
+  // 戻るボタンのリンクとテキストを決定
+  const getBackLink = () => {
+    switch (from) {
+      case 'provider':
+        return { href: '/provider/dashboard', text: '← ダッシュボードに戻る' }
+      case 'favorites':
+        return { href: '/favorites', text: '← お気に入りに戻る' }
+      default:
+        return { href: '/search', text: '← 検索結果に戻る' }
+    }
+  }
+
+  const backLink = getBackLink()
+
   return (
     <div className="min-h-screen bg-gray-50 pt-14 md:pt-20">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* 戻るボタン */}
           <Link
-            href="/search"
+            href={backLink.href}
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
           >
-            ← 検索結果に戻る
+            {backLink.text}
           </Link>
 
           {/* 画像スライダー */}

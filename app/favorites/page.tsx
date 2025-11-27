@@ -114,7 +114,7 @@ export default function FavoritesPage() {
               </p>
               <div className="grid md:grid-cols-2 gap-6">
                 {favorites.map((plan) => (
-                  <PlanCardWithFavorite key={plan.id} plan={plan} />
+                  <PlanCardWithFavorite key={plan.id} plan={plan} from="favorites" />
                 ))}
               </div>
             </>

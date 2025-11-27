@@ -147,7 +147,7 @@ export default async function SearchResults({ searchParams }: SearchResultsProps
       {/* プランカード一覧 */}
       <div className="grid md:grid-cols-2 gap-6">
         {filteredPlans.map((plan) => (
-          <PlanCardWithFavorite key={plan.id} plan={plan as Plan} />
+          <PlanCardWithFavorite key={plan.id} plan={plan as Plan} from="search" />
         ))}
       </div>
     </div>
