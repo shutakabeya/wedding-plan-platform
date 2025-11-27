@@ -170,14 +170,38 @@ export default async function PlanDetailPage({ params, searchParams }: PlanDetai
             {plan.providers && (
               <div className="border-t pt-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">提供者情報</h2>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {plan.providers.name}
-                  </h3>
-                  {plan.providers.bio && (
-                    <p className="text-gray-700 mb-2">{plan.providers.bio}</p>
+                <Link
+                  href={`/provider/${plan.providers.id}`}
+                  className="flex flex-col md:flex-row gap-4 items-start md:items-center hover:opacity-80 transition-opacity"
+                >
+                  {/* プロフィール画像 */}
+                  {plan.providers.profile_image ? (
+                    <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden bg-gray-200 shrink-0">
+                      <Image
+                        src={supabase.storage.from('provider-profiles').getPublicUrl(plan.providers.profile_image).data.publicUrl}
+                        alt={plan.providers.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 text-2xl shrink-0">
+                      {plan.providers.name.charAt(0)}
+                    </div>
                   )}
-                </div>
+                  {/* 事業者情報 */}
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-pink-600 transition-colors">
+                      {plan.providers.name}
+                    </h3>
+                    {plan.providers.bio && (
+                      <p className="text-gray-700 mb-2 line-clamp-2">{plan.providers.bio}</p>
+                    )}
+                    <span className="text-sm text-pink-600 hover:text-pink-700">
+                      プロフィールを見る →
+                    </span>
+                  </div>
+                </Link>
               </div>
             )}
           </div>

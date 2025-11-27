@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS providers (
   password_hash TEXT NOT NULL,
   name TEXT NOT NULL,
   bio TEXT,
+  profile_image TEXT, -- Supabase storage path
   sns_links JSONB DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

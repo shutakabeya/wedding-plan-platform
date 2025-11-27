@@ -6,6 +6,7 @@ export interface Provider {
   password_hash: string
   name: string
   bio: string | null
+  profile_image: string | null
   sns_links: Record<string, string> | null
   created_at: string
 }

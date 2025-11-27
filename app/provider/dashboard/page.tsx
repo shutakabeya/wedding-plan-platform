@@ -127,6 +127,12 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-gray-900">ダッシュボード</h1>
           <div className="flex gap-4">
             <Link
+              href="/provider/profile/edit"
+              className="px-6 py-2 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+            >
+              プロフィール設定
+            </Link>
+            <Link
               href="/provider/plan/new"
               className="px-6 py-2 bg-pink-500 text-white rounded-lg font-semibold hover:bg-pink-600 transition-colors"
             >
