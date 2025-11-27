@@ -114,7 +114,7 @@ export default function SearchFiltersWrapper({ initialParams, children }: Search
         {/* スマホ版: 検索条件を開くボタン */}
         <button
           onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className="lg:hidden flex items-center gap-2 text-gray-500 text-sm hover:text-gray-700 transition-colors"
+          className="lg:hidden flex items-center gap-2 text-gray-700 text-sm hover:text-gray-900 transition-colors"
         >
           <span>{isFilterOpen ? '検索条件を閉じる' : '検索条件を開く'}</span>
           <svg

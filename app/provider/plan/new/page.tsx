@@ -80,7 +80,12 @@ export default function NewPlanPage() {
       // 画像をアップロード
       const imagePaths: string[] = []
       for (const image of images) {
-        const fileName = `${Date.now()}-${image.name}`
+        // ファイル名から日本語文字や特殊文字を削除し、安全な文字のみを使用
+        const safeFileName = image.name
+          .replace(/[^\w.-]/g, '_') // 英数字、アンダースコア、ピリオド、ハイフン以外をアンダースコアに置換
+          .replace(/_{2,}/g, '_') // 連続するアンダースコアを1つに
+          .replace(/^_+|_+$/g, '') // 先頭と末尾のアンダースコアを削除
+        const fileName = `${Date.now()}-${safeFileName}`
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('plan-images')
           .upload(fileName, image)
@@ -133,10 +138,10 @@ export default function NewPlanPage() {
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <Link
-            href="/provider/dashboard"
-            className="text-gray-600 hover:text-gray-900"
-          >
+            <Link
+              href="/provider/dashboard"
+              className="text-gray-700 hover:text-gray-900"
+            >
             ← ダッシュボードに戻る
           </Link>
         </div>
@@ -147,7 +152,7 @@ export default function NewPlanPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* プラン名 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 プラン名 <span className="text-red-500">*</span>
               </label>
               <input
@@ -161,7 +166,7 @@ export default function NewPlanPage() {
 
             {/* 価格 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 価格（円） <span className="text-red-500">*</span>
               </label>
               <input
@@ -176,14 +181,14 @@ export default function NewPlanPage() {
 
             {/* 規模 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 規模 <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.scale}
                 onChange={(e) => setFormData({ ...formData, scale: e.target.value })}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 text-gray-900 bg-white"
               >
                 <option value="">選択してください</option>
                 {SCALE_OPTIONS.map((option) => (
@@ -196,10 +201,10 @@ export default function NewPlanPage() {
 
             {/* 世界観 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 世界観 <span className="text-red-500">*</span>
               </label>
-        <p className="text-xs text-gray-500 mb-2">
+        <p className="text-xs text-gray-700 mb-2">
           複数選択可（当てはまる世界観をすべて選んでください）
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -211,7 +216,7 @@ export default function NewPlanPage() {
                 className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm cursor-pointer transition-colors ${
                   checked
                     ? 'border-pink-500 bg-pink-50 text-pink-700'
-                    : 'border-gray-300 bg-white hover:border-pink-300'
+                    : 'border-gray-300 bg-white text-gray-900 hover:border-pink-300'
                 }`}
               >
                 <input
@@ -232,14 +237,14 @@ export default function NewPlanPage() {
 
             {/* 場所 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 場所 <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 text-gray-900 bg-white"
               >
                 <option value="">選択してください</option>
                 {PREFECTURES.map((pref) => (
@@ -252,14 +257,14 @@ export default function NewPlanPage() {
 
             {/* 目的 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 目的 <span className="text-red-500">*</span>
               </label>
               <select
                 value={formData.purpose}
                 onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500 text-gray-900 bg-white"
               >
                 <option value="">選択してください</option>
                 {PURPOSE_OPTIONS.map((option) => (
@@ -272,7 +277,7 @@ export default function NewPlanPage() {
 
             {/* 日程 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 日程
               </label>
               <input
@@ -286,7 +291,7 @@ export default function NewPlanPage() {
 
             {/* プラン内容（箇条書き） */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 プラン内容（箇条書き）
               </label>
               {formData.summary_points.map((point, index) => (
@@ -320,7 +325,7 @@ export default function NewPlanPage() {
 
             {/* 詳細説明 */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 詳細説明
               </label>
               <textarea
@@ -333,7 +338,7 @@ export default function NewPlanPage() {
 
             {/* 画像アップロード */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
                 画像（複数選択可）
               </label>
               <input
@@ -344,7 +349,7 @@ export default function NewPlanPage() {
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
               />
               {images.length > 0 && (
-                <p className="mt-2 text-sm text-gray-600">
+                <p className="mt-2 text-sm text-gray-700">
                   {images.length}枚の画像が選択されています
                 </p>
               )}

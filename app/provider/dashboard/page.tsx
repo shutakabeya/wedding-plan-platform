@@ -51,6 +51,67 @@ export default function DashboardPage() {
     router.push('/provider/login')
   }
 
+  const handleDeletePlan = async (planId: string) => {
+    if (!providerId) return
+
+    // 確認ダイアログ
+    if (!confirm('このプランを削除してもよろしいですか？この操作は取り消せません。')) {
+      return
+    }
+
+    try {
+      const supabase = createClient()
+      
+      // 削除前にプラン情報を取得（画像パスを取得するため）
+      const { data: plan, error: fetchError } = await supabase
+        .from('plans')
+        .select('images')
+        .eq('id', planId)
+        .eq('provider_id', providerId)
+        .single()
+
+      if (fetchError) {
+        console.error('Error fetching plan:', fetchError)
+        alert('プランの取得に失敗しました: ' + fetchError.message)
+        return
+      }
+
+      // Storageの画像を削除
+      if (plan && plan.images && plan.images.length > 0) {
+        for (const imagePath of plan.images) {
+          const { error: deleteImageError } = await supabase.storage
+            .from('plan-images')
+            .remove([imagePath])
+          
+          if (deleteImageError) {
+            console.error('Error deleting image:', deleteImageError)
+            // 画像の削除に失敗してもプランの削除は続行
+          }
+        }
+      }
+      
+      // プランを削除
+      const { error } = await supabase
+        .from('plans')
+        .delete()
+        .eq('id', planId)
+        .eq('provider_id', providerId)
+
+      if (error) {
+        console.error('Error deleting plan:', error)
+        alert('プランの削除に失敗しました: ' + error.message)
+        return
+      }
+
+      // プラン一覧を再取得
+      fetchPlans(providerId)
+      alert('プランを削除しました')
+    } catch (err) {
+      console.error('Error:', err)
+      alert('プランの削除に失敗しました')
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -120,6 +181,12 @@ export default function DashboardPage() {
                     編集
                   </Link>
                 </div>
+                <button
+                  onClick={() => handleDeletePlan(plan.id)}
+                  className="w-full mt-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
+                >
+                  削除
+                </button>
               </div>
             ))}
           </div>

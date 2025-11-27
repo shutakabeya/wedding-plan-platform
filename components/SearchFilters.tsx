@@ -29,13 +29,13 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">検索条件</h2>
+      <h2 className="text-xl font-bold text-gray-900 mb-4">検索条件</h2>
 
       {/* 料金（Price Range） */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">料金（Price Range）</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">料金（Price Range）</label>
         <select
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-gray-900 bg-white"
           value={initialParams.price || ''}
           onChange={(e) => updateFilter('price', e.target.value)}
         >
@@ -50,9 +50,9 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
 
       {/* 規模 */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">規模</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">規模</label>
         <select
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-gray-900 bg-white"
           value={initialParams.scale || ''}
           onChange={(e) => updateFilter('scale', e.target.value)}
         >
@@ -67,9 +67,9 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
 
       {/* 世界観 */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">世界観</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">世界観</label>
         <select
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-gray-900 bg-white"
           value={initialParams.world_view || ''}
           onChange={(e) => updateFilter('world_view', e.target.value)}
         >
@@ -84,9 +84,9 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
 
       {/* 場所 */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">場所</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">場所</label>
         <select
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-gray-900 bg-white"
           value={initialParams.location || ''}
           onChange={(e) => updateFilter('location', e.target.value)}
         >
@@ -105,9 +105,9 @@ export default function SearchFilters({ initialParams }: SearchFiltersProps) {
 
       {/* 目的 */}
       <div className="mb-6">
-        <label className="block text-sm font-semibold mb-2">目的</label>
+        <label className="block text-sm font-semibold text-gray-900 mb-2">目的</label>
         <select
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-gray-900 bg-white"
           value={initialParams.purpose || ''}
           onChange={(e) => updateFilter('purpose', e.target.value)}
         >

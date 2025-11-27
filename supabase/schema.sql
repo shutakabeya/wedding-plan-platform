@@ -50,6 +50,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- 既存のトリガーを削除（エラーになる場合は無視してください）
+DROP TRIGGER IF EXISTS update_plans_updated_at ON plans;
+
 CREATE TRIGGER update_plans_updated_at
   BEFORE UPDATE ON plans
   FOR EACH ROW
@@ -59,23 +62,34 @@ CREATE TRIGGER update_plans_updated_at
 ALTER TABLE providers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE plans ENABLE ROW LEVEL SECURITY;
 
+-- 既存のポリシーを削除（エラーになる場合は無視してください）
+DROP POLICY IF EXISTS "Plans are viewable by everyone" ON plans;
+DROP POLICY IF EXISTS "Providers can insert their own plans" ON plans;
+DROP POLICY IF EXISTS "Providers can update their own plans" ON plans;
+DROP POLICY IF EXISTS "Providers can delete their own plans" ON plans;
+DROP POLICY IF EXISTS "Providers are viewable by everyone" ON providers;
+DROP POLICY IF EXISTS "Anyone can insert providers" ON providers;
+DROP POLICY IF EXISTS "Anyone can update providers" ON providers;
+
 -- プランは全員が閲覧可能
 CREATE POLICY "Plans are viewable by everyone"
   ON plans FOR SELECT
   USING (true);
 
 -- 事業者は自分のプランのみ作成・更新・削除可能
+-- 注意: 簡易実装のため、現在は全員がプランを挿入・更新・削除可能
+-- 本番環境では適切な認証（Supabase Auth）を実装し、auth.uid()を使用したポリシーに変更してください
 CREATE POLICY "Providers can insert their own plans"
   ON plans FOR INSERT
-  WITH CHECK (auth.uid()::text = provider_id::text);
+  WITH CHECK (true);
 
 CREATE POLICY "Providers can update their own plans"
   ON plans FOR UPDATE
-  USING (auth.uid()::text = provider_id::text);
+  USING (true);
 
 CREATE POLICY "Providers can delete their own plans"
   ON plans FOR DELETE
-  USING (auth.uid()::text = provider_id::text);
+  USING (true);
 
 -- 事業者情報のRLSポリシー（簡易実装）
 -- 全員がprovidersテーブルを読み取り可能
@@ -107,6 +121,11 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
 -- Row Level Security (RLS) ポリシー
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+
+-- 既存のポリシーを削除（エラーになる場合は無視してください）
+DROP POLICY IF EXISTS "Users are viewable by everyone" ON users;
+DROP POLICY IF EXISTS "Anyone can insert users" ON users;
+DROP POLICY IF EXISTS "Anyone can update users" ON users;
 
 -- 一般ユーザー情報のRLSポリシー（簡易実装）
 -- 全員がusersテーブルを読み取り可能
@@ -140,6 +159,11 @@ CREATE INDEX IF NOT EXISTS idx_favorites_plan_id ON favorites(plan_id);
 -- Row Level Security (RLS) ポリシー
 ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
 
+-- 既存のポリシーを削除（エラーになる場合は無視してください）
+DROP POLICY IF EXISTS "Favorites are viewable by everyone" ON favorites;
+DROP POLICY IF EXISTS "Anyone can insert favorites" ON favorites;
+DROP POLICY IF EXISTS "Anyone can delete favorites" ON favorites;
+
 -- お気に入りは全員が閲覧可能（簡易実装）
 CREATE POLICY "Favorites are viewable by everyone"
   ON favorites FOR SELECT
@@ -156,4 +180,34 @@ CREATE POLICY "Anyone can delete favorites"
   USING (true);
 
 -- 注意: 本番環境では適切な認証・認可を実装してください
+
+-- Storageバケット（plan-images）のRLSポリシー設定
+-- 注意: このSQLは、plan-imagesバケットが作成された後に実行してください
+-- バケットが存在しない場合は、Supabaseダッシュボードで先に作成してください
+-- 注意: storage.objectsはシステムテーブルのため、ALTER TABLEは実行できません
+-- RLSは通常、バケット作成時に自動的に有効になっています
+
+-- 既存のポリシーを削除（エラーになる場合は無視してください）
+DROP POLICY IF EXISTS "Public Access for plan-images" ON storage.objects;
+DROP POLICY IF EXISTS "Anyone can upload to plan-images" ON storage.objects;
+DROP POLICY IF EXISTS "Anyone can delete from plan-images" ON storage.objects;
+
+-- 全員がplan-imagesバケットから読み取り可能（公開設定）
+-- 注意: ポリシーが既に存在する場合は、上記のDROP POLICYで削除してから実行してください
+CREATE POLICY "Public Access for plan-images"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'plan-images');
+
+-- 全員がplan-imagesバケットにアップロード可能（簡易実装）
+-- 本番環境では適切な認証を実装し、認証済みユーザーのみアップロード可能にする
+CREATE POLICY "Anyone can upload to plan-images"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'plan-images');
+
+-- 全員がplan-imagesバケットのファイルを削除可能（簡易実装）
+-- 本番環境では適切な認証を実装し、認証済みユーザーのみ削除可能にする
+CREATE POLICY "Anyone can delete from plan-images"
+  ON storage.objects FOR DELETE
+  USING (bucket_id = 'plan-images');
+
 

@@ -5,9 +5,12 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.supabase.co',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
       },
     ],
+    // 開発環境での画像最適化エラーを回避
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 };
 
