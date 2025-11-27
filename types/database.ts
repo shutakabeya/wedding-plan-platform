@@ -24,6 +24,8 @@ export interface Plan {
   images: string[]
   summary_points: string[]
   description: string | null
+  cta_type: 'phone' | 'email' | 'link' | null
+  cta_value: string | null
   created_at: string
   updated_at: string
 }
@@ -71,6 +73,8 @@ export interface PlanFormData {
   summary_points: string[]
   description: string
   images: File[]
+  cta_type: 'phone' | 'email' | 'link' | ''
+  cta_value: string
 }
 
 // 選択肢の定義

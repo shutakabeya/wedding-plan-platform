@@ -25,6 +25,8 @@ export default function NewPlanPage() {
     date_range: '',
     summary_points: [''],
     description: '',
+    cta_type: '' as 'phone' | 'email' | 'link' | '',
+    cta_value: '',
   })
   const [images, setImages] = useState<File[]>([])
 
@@ -101,7 +103,7 @@ export default function NewPlanPage() {
       }
 
       // プランを作成
-      const { error } = await supabase.from('plans').insert({
+      const insertData: any = {
         provider_id: providerId,
         title: formData.title,
         price: parseInt(formData.price),
@@ -113,7 +115,15 @@ export default function NewPlanPage() {
         summary_points: formData.summary_points.filter((p) => p.trim() !== ''),
         description: formData.description || null,
         images: imagePaths,
-      })
+      }
+
+      // CTA設定がある場合のみ追加
+      if (formData.cta_type && formData.cta_value) {
+        insertData.cta_type = formData.cta_type
+        insertData.cta_value = formData.cta_value
+      }
+
+      const { error } = await supabase.from('plans').insert(insertData)
 
       if (error) {
         console.error('Error creating plan:', error)
@@ -352,6 +362,78 @@ export default function NewPlanPage() {
                 <p className="mt-2 text-sm text-gray-700">
                   {images.length}枚の画像が選択されています
                 </p>
+              )}
+            </div>
+
+            {/* 相談ボタン設定 */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">相談ボタン設定</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                プランページに表示される「まずは相談してみる」ボタンの動作を設定します
+              </p>
+              
+              {/* CTAタイプ選択 */}
+              <div className="mb-4">
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  相談方法
+                </label>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="cta_type"
+                      value="phone"
+                      checked={formData.cta_type === 'phone'}
+                      onChange={(e) => setFormData({ ...formData, cta_type: e.target.value as 'phone', cta_value: '' })}
+                      className="h-4 w-4"
+                    />
+                    <span>電話</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="cta_type"
+                      value="email"
+                      checked={formData.cta_type === 'email'}
+                      onChange={(e) => setFormData({ ...formData, cta_type: e.target.value as 'email', cta_value: '' })}
+                      className="h-4 w-4"
+                    />
+                    <span>メール</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="cta_type"
+                      value="link"
+                      checked={formData.cta_type === 'link'}
+                      onChange={(e) => setFormData({ ...formData, cta_type: e.target.value as 'link', cta_value: '' })}
+                      className="h-4 w-4"
+                    />
+                    <span>リンク（URL）</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* CTA値入力 */}
+              {formData.cta_type && (
+                <div>
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                    {formData.cta_type === 'phone' && '電話番号'}
+                    {formData.cta_type === 'email' && 'メールアドレス'}
+                    {formData.cta_type === 'link' && 'URL'}
+                  </label>
+                  <input
+                    type={formData.cta_type === 'email' ? 'email' : 'text'}
+                    value={formData.cta_value}
+                    onChange={(e) => setFormData({ ...formData, cta_value: e.target.value })}
+                    placeholder={
+                      formData.cta_type === 'phone' ? '例: 090-1234-5678'
+                      : formData.cta_type === 'email' ? '例: contact@example.com'
+                      : '例: https://example.com/contact'
+                    }
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                  />
+                </div>
               )}
             </div>
 

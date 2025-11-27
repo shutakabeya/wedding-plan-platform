@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS plans (
   images TEXT[] DEFAULT '{}', -- Supabase storage path
   summary_points TEXT[] DEFAULT '{}',
   description TEXT,
+  cta_type TEXT, -- 'phone', 'email', 'link'
+  cta_value TEXT, -- 電話番号、メールアドレス、またはURL
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
