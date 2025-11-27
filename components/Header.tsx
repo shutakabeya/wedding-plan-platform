@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-export default function Header() {
+interface HeaderProps {
+  isProviderPage?: boolean
+}
+
+export default function Header({ isProviderPage = false }: HeaderProps) {
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -77,13 +81,13 @@ export default function Header() {
               ) : (
                 <>
                   <Link
-                    href="/signup"
+                    href={isProviderPage ? "/provider/signup" : "/signup"}
                     className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
                   >
                     新規登録
                   </Link>
                   <Link
-                    href="/login"
+                    href={isProviderPage ? "/provider/login" : "/login"}
                     className="px-4 py-2 bg-pink-500 text-white rounded-lg font-semibold hover:bg-pink-600 transition-colors"
                   >
                     ログイン
@@ -144,7 +148,7 @@ export default function Header() {
               </button>
             ) : (
               <Link
-                href="/login"
+                href={isProviderPage ? "/provider/login" : "/login"}
                 className="p-2 text-gray-700 hover:bg-pink-200 rounded-lg transition-colors"
                 aria-label="ログイン"
               >
@@ -250,14 +254,14 @@ export default function Header() {
                 ) : (
                   <>
                     <Link
-                      href="/login"
+                      href={isProviderPage ? "/provider/login" : "/login"}
                       className="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg transition-colors"
                       onClick={() => setSidebarOpen(false)}
                     >
                       ログイン
                     </Link>
                     <Link
-                      href="/signup"
+                      href={isProviderPage ? "/provider/signup" : "/signup"}
                       className="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg transition-colors"
                       onClick={() => setSidebarOpen(false)}
                     >

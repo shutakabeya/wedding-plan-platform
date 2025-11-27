@@ -4,7 +4,7 @@ import Header from '@/components/Header'
 export default function ProviderLandingPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-pink-50 to-white">
-      <Header />
+      <Header isProviderPage={true} />
       
       <main className="pt-20 md:pt-24">
         {/* ヒーローセクション */}
@@ -24,7 +24,7 @@ export default function ProviderLandingPage() {
               href="/"
               className="inline-block px-8 py-4 bg-pink-500 text-white text-lg font-semibold rounded-full hover:bg-pink-600 transition-colors shadow-lg hover:shadow-xl"
             >
-              トップページでプラットフォームを確認
+              サイトを確認
             </Link>
           </div>
         </section>
@@ -290,16 +290,16 @@ export default function ProviderLandingPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
-                  href="/"
+                  href="/provider/signup"
                   className="px-8 py-4 bg-white text-pink-600 text-lg font-semibold rounded-full hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl"
                 >
-                  トップページでプラットフォームを確認
+                  新規登録
                 </Link>
                 <Link
-                  href="/provider/signup"
+                  href="/provider/login"
                   className="px-8 py-4 bg-transparent border-2 border-white text-white text-lg font-semibold rounded-full hover:bg-white hover:text-pink-600 transition-colors"
                 >
-                  無料掲載を始める
+                  ログイン
                 </Link>
               </div>
               <p className="text-base md:text-lg text-pink-100 mt-8">
