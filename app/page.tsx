@@ -10,7 +10,7 @@ export default function Home() {
       <main className="container mx-auto px-4 pt-20 pb-6 md:pt-24 md:pb-16">
         <div className="max-w-4xl mx-auto">
           {/* PC版: タイトルとサブタイトル */}
-          <div className="hidden md:block text-center mb-12">
+          <div className="hidden md:block text-center mb-12 md:mt-8">
             <h1 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
               理想の結婚式プランを探そう
             </h1>

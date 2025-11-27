@@ -28,8 +28,8 @@ export default function Header() {
 
   return (
     <>
-      {/* PC版: 薄い白色ヘッダー */}
-      <header className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100">
+      {/* PC版: 透明でぼかし効果のあるヘッダー */}
+      <header className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-md border-b border-white/20">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             {/* 左: サイドバーボタン */}
