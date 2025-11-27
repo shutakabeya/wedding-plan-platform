@@ -16,14 +16,6 @@ export default function ProviderLandingPage() {
             <p className="text-2xl md:text-3xl font-semibold text-pink-600 mb-4">
               理想のカップルと出会える場所
             </p>
-            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-              結婚式市場には、見込み客との出会いを難しくする課題が山積しています。
-              カップルは平均で200時間以上を費やして業者を調べて比較し、情報が不透明なため23％も予算を超過してしまうことがあるといわれています。
-              さらに87％のカップルが計画中に高いストレスを感じ、73％が初期予算を15％以上も上回ってしまいます。
-            </p>
-            <p className="text-base md:text-lg text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
-              価格や内容を公開しない業者が多いことから、ユーザーは適切な比較ができず、業者側も本気度の低い問い合わせに時間を取られているのが現状です。
-            </p>
             <p className="text-base md:text-lg text-gray-700 mb-10 leading-relaxed max-w-3xl mx-auto">
               <span className="font-semibold">Bridal</span>は、カップルが求める「世界観・会場タイプ・人数・予算」を軸にプランを探せる新しい検索プラットフォームです。
               世界観や料金、規模などを明確に登録できることで、あなたの強みが伝わりやすくなり、条件に合ったカップルからの問い合わせを得られます。
@@ -140,9 +132,9 @@ export default function ProviderLandingPage() {
                       安心の登録・管理
                     </h4>
                     <p className="text-gray-700 leading-relaxed">
-                      Supabaseを利用したアカウント管理により、メールとパスワードだけで簡単に登録できます。
+                      メールとパスワードだけで簡単に登録できます。
                       複数プランの登録や編集もダッシュボードから簡単に行えます。
-                      掲載は無料で、成約時のみ成功報酬が発生するモデルも利用できます。
+                      掲載は無料で、成約時のみ成功報酬が発生するモデルを利用できます。
                     </p>
                   </div>
 
