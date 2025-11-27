@@ -101,7 +101,7 @@ export default function Header({ isProviderPage = false }: HeaderProps) {
 
       {/* スマホ版: ヘッダーあり（控えめな色） */}
       <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-linear-to-r from-pink-200 to-pink-300 shadow-sm">
-        <div className="container mx-auto px-4 py-3">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* 左: サイドバーボタン */}
             <button
@@ -123,7 +123,7 @@ export default function Header({ isProviderPage = false }: HeaderProps) {
             </button>
 
             {/* 中央: タイトル */}
-            <Link href="/" className="text-lg font-bold text-gray-800 hover:text-pink-700 transition-colors">
+            <Link href="/" className="text-xl font-bold text-gray-800 hover:text-pink-700 transition-colors">
               Bridal
             </Link>
 
