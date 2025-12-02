@@ -25,3 +25,4 @@ SELECT id, title, cta_type, cta_value
 FROM plans 
 LIMIT 5;
 
+

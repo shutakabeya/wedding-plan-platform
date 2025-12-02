@@ -120,3 +120,4 @@ ADD COLUMN cta_value TEXT;
 3. ✅ プラン作成・編集ページでCTA設定ができる
 4. ✅ プランページでCTAボタンが正しく動作する
 
+
